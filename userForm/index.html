@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e9f3fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .registration-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .registration-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2a8cc7;
+        }
+
+        .registration-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2a8cc7;
+        }
+
+        .registration-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .registration-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2a8cc7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .registration-form button:hover {
+            background-color: #1d76a3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="registration-form">
+        <h2>User Registration</h2>
+        <form id="regForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+            <div class="error-message" id="nameError">Full name is required</div>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <div class="error-message" id="usernameError">Username is required</div>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <div class="error-message" id="emailError">Please enter a valid email</div>
+
+            <label for="mobile">Mobile Number:</label>
+            <input type="tel" id="mobile" name="mobile" required pattern="[0-9]{10}">
+            <div class="error-message" id="mobileError">Please enter a valid mobile number (10 digits)</div>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required></textarea>
+            <div class="error-message" id="addressError">Address is required</div>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <div class="error-message" id="passwordError">Password is required</div>
+
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        // Get references to the form and inputs
+        const form = document.getElementById('regForm');
+        const name = document.getElementById('name');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const mobile = document.getElementById('mobile');
+        const address = document.getElementById('address');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm-password');
+
+        // Get references to error message elements
+        const nameError = document.getElementById('nameError');
+        const usernameError = document.getElementById('usernameError');
+        const emailError = document.getElementById('emailError');
+        const mobileError = document.getElementById('mobileError');
+        const addressError = document.getElementById('addressError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+        // Form submission event
+        form.addEventListener('submit', function (e) {
+            let valid = true;
+
+            // Reset error messages
+            nameError.style.display = 'none';
+            usernameError.style.display = 'none';
+            emailError.style.display = 'none';
+            mobileError.style.display = 'none';
+            addressError.style.display = 'none';
+            passwordError.style.display = 'none';
+            confirmPasswordError.style.display = 'none';
+
+            // Validate name
+            if (name.value.trim() === "") {
+                nameError.style.display = 'block';
+                valid = false;
+            }
+
+            // Validate username
+            if (username.value.trim() === "") {
+                usernameError.style.display = 'block';
+                valid = false;
+            }
+
+            // Validate email
+            if (email.value.trim() === "" || !validateEmail(email.value)) {
+                emailError.style.display = 'block';
+                valid = false;
+            }
+
+            // Validate mobile
+            if (mobile.value.trim() === "" || !/^[0-9]{10}$/.test(mobile.value)) {
+                mobileError.style.display = 'block';
+                valid = false;
+            }
+
+            // Validate address
+            if (address.value.trim() === "") {
+                addressError.style.display = 'block';
+                valid = false;
+            }
+
+            // Validate password
+            if (password.value.trim() === "") {
+                passwordError.style.display = 'block';
+                valid = false;
+            }
+
+            // Validate confirm password
+            if (confirmPassword.value !== password.value) {
+                confirmPasswordError.style.display = 'block';
+                valid = false;
+            }
+
+            // Prevent form submission if validation fails
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+
+        // Email validation function
+        function validateEmail(email) {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailPattern.test(email);
+        }
+    </script>
+
+</body>
+
+</html>
